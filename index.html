@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Rime 西米 for Squirrel</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js"></script>
+  <script src="jscolor/jscolor.js"></script>
+  <script src="js/script.js"></script>
+  <script type="application/x-javascript" src="js/rw.js"></script>
+  </head>
+  <body>
+    <h1><span>RIME</span> <ruby>西<rt>See</rt></ruby><ruby>米<rt>Me</rt></ruby> - for <ruby>Squirrel 1.1.2<rt>鼠须管（Edit by Bryan）</rt></ruby></h1>
+    <table>
+      <tbody>
+        <tr>
+          <td id="effect">
+            <div id="select"> <span id="text">穿搭</span><span id="hilited" data-candidate="配色" data-pinyin="pei se">pei se</span>&nbsp;<span
+                id="cursor">˰</span></div>
+            <div id="box">
+              <div id="display">
+                <div id="n1"><span id="label1">1.</span><span id="word">配色</span><span
+                    id="code1">(pei se)</span></div>
+                <div id="n2"><span id="label2">2.</span><span id="word">陪</span><span
+                    id="code2">(pei)</span></div>
+                <div id="n3"><span id="label3">3.</span><span id="word">配</span><span
+                    id="code3">(pei)</span></div>
+                <div id="n4"><span id="label4">4.</span><span id="word">赔</span><span
+                    id="code4">(pei)</span></div>
+                <div id="n5"><span id="label5">5.</span><span id="word">培</span><span
+                    id="code5">(pei)</span></div>
+                <div id="n6"><span id="label6">6.</span><span id="word">佩</span><span
+                    id="code6">(pei)</span></div>
+                <div id="n7"><span id="label7">7.</span><span id="word">裴</span><span
+                    id="code7">(pei)</span></div>
+                <div id="n8"><span id="label8">8.</span><span id="word">斐</span><span
+                    id="code8">(pei)</span></div>
+                <div id="n9"><span id="label9">9.</span><span id="word">呸</span><span
+                    id="code9">(pei)</span></div>
+              </div>
+            </div>
+            <br>
+            <div id="little_box"> <span id="tip">汉字&nbsp;&nbsp;扩展&nbsp;&nbsp;A</span> </div>
+          </td>
+          <td id="style_setting">
+            <form>
+              <fieldset> <legend>自动配色</legend> <span>主<span class="em"></span>色</span>
+                <input class="color {pickerPosition:'left'}" type="text" id="primary_input" value="" placeholder="例：BD8F13" onchange="onPrimaryChange(this.value);" style="width:100px;text-transform:uppercase;"><br>
+                <span>深<span class="em"></span>浅</span>
+                <label><input type="radio" name="theme_mode" value="auto" checked onchange="onThemeModeChange()">自动</label>
+                <label><input type="radio" name="theme_mode" value="light" onchange="onThemeModeChange()">浅色</label>
+                <label><input type="radio" name="theme_mode" value="dark" onchange="onThemeModeChange()">深色</label>
+              </fieldset>
+              <fieldset> <legend>基本信息</legend> <span>代<span class="em"></span>号</span><input
+                  name="schema"
+                  id="schema_input"
+                  value="example"
+                  onchange="writeIn(this.name,this.value+':');"
+                  type="text"><br>
+                <span>名<span class="em"></span>称</span><input name="name"
+                  id="name_input"
+                  value="名字"
+                  onchange="writeIn(this.name,this.value);"
+                  type="text"><br>
+                <span>作<span class="em"></span>者</span><input name="author"
+                  id="author_input"
+                  value="作者"
+                  onchange="writeIn(this.name,this.value);"
+                  type="text"><br>
+              </fieldset>
+              <fieldset> <legend>其他设置</legend> <span>候选数</span> <input
+                  value="9"
+                  min="1"
+                  max="9"
+                  name="number"
+                  onchange="changeNumber(this.value)"
+                  type="range"><br>
+              </fieldset>
+              <fieldset> <legend>外观样式</legend> <span>布局模式</span>
+                <input type="radio" name="candidate_list_layout" value="stacked" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);">stacked
+                <input type="radio" name="candidate_list_layout" value="linear" checked onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);">linear
+                <br>
+                <span>文字方向</span>
+                <input type="radio" name="text_orientation" value="horizontal" checked onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);">horizontal
+                <input type="radio" name="text_orientation" value="vertical" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);">vertical
+                <br>
+                <span>行内预编辑</span><input type="checkbox" name="inline_preedit" onchange="writeIn(this.name,this.checked);changeStyle(this.name,this.checked);"><br>
+                <span>候选嵌入</span><input type="checkbox" name="inline_candidate" onchange="writeIn(this.name,this.checked);changeStyle(this.name,this.checked);"><br>
+                <span>紧贴边缘</span><input type="checkbox" name="memorize_size" checked onchange="writeIn(this.name,this.checked);"><br>
+                <span>透明叠加</span><input type="checkbox" name="mutual_exclusive" onchange="writeIn(this.name,this.checked);changeStyle(this.name,this.checked);"><br>
+                <span>半透明背景</span><input type="checkbox" name="translucency" onchange="writeIn(this.name,this.checked);changeStyle(this.name,this.checked);"><br>
+                <span>透明度</span><input type="number" min="0" max="1" step="0.1" value="1" name="alpha" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>圆角半径</span><input type="number" value="6" name="corner_radius" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>高亮圆角</span><input type="number" value="4" name="hilited_corner_radius" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>边框高度</span><input type="number" value="2" name="border_height" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>边框宽度</span><input type="number" value="1" name="border_width" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>边框颜色</span><input
+                    class="color {pickerPosition:'left'}"
+                    name="border"
+                    id="border_input"
+                    value="DDDDDD"
+                    onchange="writeInQ(this.name,this.value);changeStyle('border_color',this.color);"
+                    type="text"><br>
+                <span>候选项边距</span><input type="number" value="12" name="line_spacing" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>编码区边距</span><input type="number" value="8" name="spacing" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>阴影大小</span><input type="number" value="0" name="shadow_size" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>候选项缩放</span><input type="number" value="0" name="surrounding_extra_expansion" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>候选格式</span><input type="text" value="[label]. [candidate] [comment]" name="candidate_format" onchange="writeInQ(this.name,this.value);changeStyle(this.name,this.value);" style="width:140px;"><br>
+                <span>文本偏移</span><input type="number" value="0" name="base_offset" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>全局字体</span><input type="text" value="PingFangSC" name="font_face" onchange="writeInQ(this.name,this.value);changeStyle(this.name,this.value);" style="width:140px;"><br>
+                <span>全局字号</span><input type="number" value="18" name="font_point" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>标签字体</span><input type="text" value="PingFangSC" name="label_font_face" onchange="writeInQ(this.name,this.value);changeStyle(this.name,this.value);" style="width:140px;"><br>
+                <span>标签字号</span><input type="number" value="18" name="label_font_point" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);"><br>
+                <span>注释字体</span><input type="text" value="PingFangSC, 黑体字根" name="comment_font_face" onchange="writeInQ(this.name,this.value);changeStyle(this.name,this.value);" style="width:140px;"><br>
+                <span>注释字号</span><input type="number" value="16" name="comment_font_point" onchange="writeIn(this.name,this.value);changeStyle(this.name,this.value);">
+              </fieldset>
+              <fieldset> <legend>环境参考背景</legend> <span>背景色</span><input
+                  id="background"
+                  class="color"
+                  name="body"
+                  value="F0F0F0"
+                  onchange="document.getElementById('effect').style.backgroundColor = '#'+this.color"
+                  type="text"> </fieldset>
+              <fieldset id="modEx"> <legend>BGR &lt;&gt; RGB</legend> <span>BGR</span><input
+                  id="bgr"
+                  value="77DDBB"
+                  onchange="exMode('bgr','rgb',this.value);"
+                  type="text"><br>
+                <span>RGB</span><input class="color  {pickerPosition:'right'}"
+                  id="rgb"
+                  value="BBDD77"
+                  onchange="exMode('rgb','bgr',this.value);"
+                  type="text"><br>
+              </fieldset>
+            </form>
+          </td>
+          <td id="color_setting">
+            <form>
+              <fieldset> <legend>小视窗设置</legend> <span>背景</span><input
+                  class="color {pickerPosition:'left'}"
+                  name="back"
+                  id="back_input"
+                  value="FFFFFF"
+                  onchange="changeColor('box','bg',this.name,this.color);changeColor('little_box','bg',this.name,this.color);adjustEnvBackgroundForContrast(this.color);"
+                  type="text">
+                <!--鼠须管没有边框--> </fieldset>
+              <fieldset> <legend>组字区域</legend> <span>文字</span><input class="color {pickerPosition:'left'}"
+                  name="text"
+                  id="text_input"
+                  value="000000"
+                  onchange="changeColor('text','c',this.name,this.color);"
+                  type="text"><br>
+                <span>编码</span><input class="color {pickerPosition:'left'}"
+                  name="hilited_text"
+                  id="hilited_text_input"
+                  value="000000"
+                  onchange="changeColor('hilited','c',this.name,this.color);"
+                  type="text"><br>
+                <span>背景</span><input class="color {pickerPosition:'left'}"
+                  name="hilited_back"
+                  id="hilited_back_input"
+                  value="DDDDDD"
+                  onchange="changeColor('hilited','bg',this.name,this.color);"
+                  type="text"> </fieldset>
+              <fieldset> <legend>选定候选项</legend> <span>文字</span><input
+                  class="color {pickerPosition:'left'}"
+                  name="hilited_candidate_text"
+                  id="hilited_candidate_text_input"
+                  value="FFFFFF"
+                  onchange="changeColor('n1','c',this.name,this.color);"
+                  type="text"><br>
+                <span>背景</span><input class="color {pickerPosition:'left'}"
+                  name="hilited_candidate_back"
+                  id="hilited_candidate_back_input"
+                  value="000000"
+                  onchange="changeColor('n1','bg',this.name,this.color);"
+                  type="text"><br>
+                <span>序号</span><input class="color {pickerPosition:'left'}"
+                  name="hilited_candidate_label"
+                  id="hilited_candidate_label_input"
+                  value="FFFFFF"
+                  onchange="changeColor('label1','c',this.name,this.color);"
+                  type="text"> <br>
+                <span>提示</span><input class="color {pickerPosition:'left'}"
+                  name="hilited_comment_text"
+                  id="hilited_comment_text_input"
+                  value="FFFFFF"
+                  onchange="changeColor('code1','c',this.name,this.color);"
+                  type="text"></fieldset>
+              <fieldset> <legend>其他候选项</legend> <span>文字</span><input
+                  class="color {pickerPosition:'left'}"
+                  name="candidate_text"
+                  id="candidate_text_input"
+                  value="000000"
+                  onchange="changeColor('cursor','c',this.name,this.color);for(i=2;i<=9;i++) document.getElementById('n'+i).style.color = '#'+this.color;exConvert(this.name,this.color);"
+                  type="text"><br><sub>（也会影响光标颜色）</sub><br>
+                <span>序号</span><input class="color {pickerPosition:'left'}"
+                  name="label"
+                  id="label_input"
+                  value="000000"
+                  onchange="for(i=2;i<=9;i++) document.getElementById('label'+i).style.color = '#'+this.color;exConvert(this.name,this.color);"
+                  type="text"> <br>
+                <span>提示</span><input class="color {pickerPosition:'left'}"
+                  name="comment_text"
+                  id="comment_text_input"
+                  value="DDDDDD"
+                  onchange="changeColor('tip','c',this.name,this.color); for(i=2;i<=9;i++) document.getElementById('code'+i).style.color = '#'+this.color;exConvert(this.name,this.color);"
+                  type="text"><br><sub>（也会影响状态 tooltip 颜色）</sub> </fieldset>
+            </form>
+          </td>
+          <td id="code_generate">
+            <h2>生成设定码</h2>
+            <div id="source_code">
+              <div>#Rime theme</div><br>
+              <div id="schema">example:</div>
+              <div>&nbsp;&nbsp;name:&nbsp;<span id="name">名字</span></div>
+              <div>&nbsp;&nbsp;author:&nbsp;<span id="author">作者</span></div>
+              <div>&nbsp;&nbsp;back_color:&nbsp;'<span id="back_color"></span>'</div>
+              <div>&nbsp;&nbsp;text_color:&nbsp;'<span id="text_color"></span>'</div>
+              <div>&nbsp;&nbsp;hilited_text_color:&nbsp;'<span
+                  id="hilited_text_color"></span>'</div>
+              <div>&nbsp;&nbsp;hilited_back_color:&nbsp;'<span id="hilited_back_color"></span>'</div>
+              <div>&nbsp;&nbsp;hilited_candidate_text_color:&nbsp;'<span
+                  id="hilited_candidate_text_color"></span>'</div>
+              <div>&nbsp;&nbsp;hilited_candidate_back_color:&nbsp;'<span
+                  id="hilited_candidate_back_color"></span>'</div>
+              <div>&nbsp;&nbsp;hilited_candidate_label_color:&nbsp;'<span
+                  id="hilited_candidate_label_color"></span>'</div>
+              <div>&nbsp;&nbsp;hilited_comment_text_color:&nbsp;'<span
+                  id="hilited_comment_text_color"></span>'</div>
+              <div>&nbsp;&nbsp;candidate_text_color:&nbsp;'<span id="candidate_text_color"></span>'</div>
+              <div>&nbsp;&nbsp;label_color:&nbsp;'<span id="label_color"></span>'</div>
+              <div>&nbsp;&nbsp;comment_text_color:&nbsp;'<span id="comment_text_color"></span>'</div>
+              <div>&nbsp;&nbsp;candidate_list_layout:&nbsp;<span id="candidate_list_layout">linear</span></div>
+              <div>&nbsp;&nbsp;text_orientation:&nbsp;<span id="text_orientation">horizontal</span></div>
+              <div>&nbsp;&nbsp;inline_preedit:&nbsp;<span id="inline_preedit">false</span></div>
+              <div>&nbsp;&nbsp;inline_candidate:&nbsp;<span id="inline_candidate">false</span></div>
+              <div>&nbsp;&nbsp;memorize_size:&nbsp;<span id="memorize_size">true</span></div>
+              <div>&nbsp;&nbsp;mutual_exclusive:&nbsp;<span id="mutual_exclusive">false</span></div>
+              <div>&nbsp;&nbsp;translucency:&nbsp;<span id="translucency">false</span></div>
+              <div>&nbsp;&nbsp;alpha:&nbsp;<span id="alpha">1</span></div>
+              <div>&nbsp;&nbsp;corner_radius:&nbsp;<span id="corner_radius">6</span></div>
+              <div>&nbsp;&nbsp;hilited_corner_radius:&nbsp;<span id="hilited_corner_radius">4</span></div>
+              <div>&nbsp;&nbsp;border_height:&nbsp;<span id="border_height">2</span></div>
+              <div>&nbsp;&nbsp;border_width:&nbsp;<span id="border_width">1</span></div>
+              <div>&nbsp;&nbsp;border_color:&nbsp;'<span id="border_color"></span>'</div>
+              <div>&nbsp;&nbsp;line_spacing:&nbsp;<span id="line_spacing">12</span></div>
+              <div>&nbsp;&nbsp;spacing:&nbsp;<span id="spacing">8</span></div>
+              <div>&nbsp;&nbsp;shadow_size:&nbsp;<span id="shadow_size">0</span></div>
+              <div>&nbsp;&nbsp;surrounding_extra_expansion:&nbsp;<span id="surrounding_extra_expansion">0</span></div>
+              <div>&nbsp;&nbsp;candidate_format:&nbsp;'<span id="candidate_format">[label]. [candidate] [comment]</span>'</div>
+              <div>&nbsp;&nbsp;base_offset:&nbsp;<span id="base_offset">0</span></div>
+              <div>&nbsp;&nbsp;font_face:&nbsp;'<span id="font_face">PingFangSC</span>'</div>
+              <div>&nbsp;&nbsp;font_point:&nbsp;<span id="font_point">18</span></div>
+              <div>&nbsp;&nbsp;label_font_face:&nbsp;'<span id="label_font_face">PingFangSC</span>'</div>
+              <div>&nbsp;&nbsp;label_font_point:&nbsp;<span id="label_font_point">18</span></div>
+              <div>&nbsp;&nbsp;comment_font_face:&nbsp;'<span id="comment_font_face">PingFangSC, 黑体字根</span>'</div>
+              <div>&nbsp;&nbsp;comment_font_point:&nbsp;<span id="comment_font_point">16</span></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>支持浏览器：Chrome 内核（Chrome、Vivaldi、……）或 Firefox 68、Waterfox 56 等（其余浏览器可能也可正常运行，<a
+        href="https://github.com/GJRobert/Rime-See-Me-squirrel/issues/1"
+        target="_blank">欢迎反馈</a>）</div>
+    <!--工作区-->
+    <div>选择已保存的 YAML 主题配置文件<sup>*</sup>并载入：<input id="files" name="files[]"
+        multiple=""
+        type="file"> <output
+        id="list"></output>
+      <p> *&nbsp;因程序功能所限，主题配置文件须符合一定格式，详见<a href="https://github.com/GJRobert/Rime-See-Me-squirrel/blob/master/README.md#%E6%96%B0%E5%8A%9F%E8%83%BD%E8%AE%80%E5%85%A5%E7%8F%BE%E6%9C%89%E4%B8%BB%E9%A1%8C%E8%A8%AD%E5%AE%9A%E6%AA%94"
+          target="_blank">说明</a>。 </p>
+    </div>
+    <script>
+function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    // for (var i = 0, f; f = files[i]; i++) {
+    //  output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+    //              f.size, ' bytes, last modified: ',
+    //              f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+    //              '</li>');
+    //}
+    var f = files[0];
+    var reader = new FileReader();
+    //    var yaml = new jsyaml();
+    reader.onload = function(e) {
+        //    output.push(e.target.result);
+        output = jsyaml.safeLoad(e.target.result);
+        //          document.getElementById('list').innerHTML = '<ul>' + output + '</ul>';
+        //      console.dir(output);
+        var scheme = output[Object.keys(output)[0]];
+        //console.log(scheme.name);
+        console.dir(scheme);
+        //      var back_color = scheme.back_color;
+        //      var result = "";
+        for (var prop in scheme) {
+            //        result += typeof(prop) + " " + prop + "\n";
+            //        a=back_color.replace("0x","");
+            if (scheme[prop] === "") scheme[prop] = ' ' //continue;
+            if (prop.includes("color")) {
+                a = scheme[prop].replace("0x", "");
+                a = a[4] + a[5] + a[2] + a[3] + a[0] + a[1];
+                scheme[prop] = a.toLowerCase();
+            }
+            //        result += scheme[prop] + "\n";
+        }
+        //      console.log(result);
+        //  back_color=a.toLowerCase();
+        //  console.dir(scheme);      
+        //      changeColor('box','bg','back',back_color);
+        changeColor('box', 'bg', 'back', scheme.back_color);
+        changeColor('little_box', 'bg', 'back', scheme.back_color);
+        if (scheme.border_color) {
+            changeColor('box', 'bd', 'border', scheme.border_color);
+            changeColor('little_box', 'bd', 'border', scheme.border_color);
+        }
+        changeColor('code1', 'c', 'hilited_comment_text', scheme.hilited_comment_text_color);
+        changeColor('hilited', 'bg', 'hilited_back', scheme.hilited_back_color);
+        changeColor('hilited', 'c', 'hilited_text', scheme.hilited_text_color);
+        changeColor('label1', 'c', 'hilited_candidate_label', scheme.hilited_candidate_label_color);
+        changeColor('n1', 'bg', 'hilited_candidate_back', scheme.hilited_candidate_back_color);
+        changeColor('n1', 'c', 'hilited_candidate_text', scheme.hilited_candidate_text_color);
+        changeColor('text', 'c', 'text', scheme.text_color);
+        changeColor('tip', 'c', 'comment_text', scheme.comment_text_color);
+
+        for (i = 2; i <= 9; i++) document.getElementById('n' + i).style.color = '#' + scheme.candidate_text_color;
+        exConvert('candidate_text', scheme.candidate_text_color);
+        changeColor('cursor', 'c', 'candidate_text', scheme.candidate_text_color);
+        for (i = 2; i <= 9; i++) document.getElementById('label' + i).style.color = '#' + scheme.label_color;
+        exConvert('label', scheme.label_color);
+        for (i = 2; i <= 9; i++) document.getElementById('code' + i).style.color = '#' + scheme.comment_text_color;
+        exConvert('comment_text', scheme.comment_text_color);
+        for (var prop in scheme) {
+            //        if (prop === "text") scheme[prop] = "text_color";
+            //        var id = prop+'_input';
+            if (prop.includes("color")) {
+                //                  console.log(prop+"\n");
+                var id = prop.replace("color", "input");
+                //                  console.log(id+"\n");
+                var el = document.getElementById(id);
+                if (!el) continue;
+                el.value = scheme[prop].toUpperCase();
+                el.style.backgroundColor = '#' + scheme[prop];
+                if (el.jscolor && typeof el.jscolor.fromString === 'function') {
+                    el.jscolor.fromString(scheme[prop]);
+                }
+            }
+        }
+        for (var prop in scheme) {
+            if (prop.includes("color")) continue;
+            if (prop === "name" || prop === "author") continue;
+            // radio: 按 name 查找
+            var radios = document.querySelectorAll('input[type="radio"][name="' + prop + '"]');
+            if (radios.length > 0) {
+                for (var j = 0; j < radios.length; j++) {
+                    radios[j].checked = (radios[j].value == scheme[prop]);
+                }
+                var ev = new Event('change', { bubbles: true });
+                radios[0].dispatchEvent(ev);
+                continue;
+            }
+            var el = document.getElementById(prop);
+            if (!el) continue;
+            if (el.type === 'checkbox') {
+                el.checked = scheme[prop];
+            } else {
+                el.value = scheme[prop];
+            }
+            var ev = new Event('change', { bubbles: true });
+            el.dispatchEvent(ev);
+        }
+        writeIn("name",scheme.name);
+        document.getElementById("name_input").value = scheme.name;
+        //schema.author = schema.author.replace("<","&lt;");
+        //schema.author = schema.author.replace(">","&gt;");
+        writeIn("author",scheme.author);
+        document.getElementById("author_input").value = scheme.author;
+        // 重新触发 border 计算（用加载后的 width/height + border_color 合成完整样式）
+        if (typeof changeStyle === 'function') {
+            var wEl = document.querySelector('input[name="border_width"]');
+            if (wEl) changeStyle('border_width', wEl.value);
+        }
+    }
+    reader.readAsText(f);
+
+}
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    </script>
+  </body>
+</html>
