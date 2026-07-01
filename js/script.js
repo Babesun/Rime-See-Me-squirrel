@@ -280,19 +280,19 @@ function hslToHex(h,s,l){
 	return (toHex(r)+toHex(g)+toHex(b)).toUpperCase();
 }
 function updateInlinePreedit(inside){
-	// true: #select 放回 #box 内（行内预编辑模式）
-	// false: #select 移到 #box 外，置于 #box 上方（预编辑模式）
+	// true: #select 移到 #box 外（行内预编辑）
+	// false: #select 放回 #box 内
 	var select = document.getElementById('select');
 	var box = document.getElementById('box');
 	var display = document.getElementById('display');
 	if(!select || !box || !display) return;
 	if(inside){
-		if(select.parentNode !== box){
-			box.insertBefore(select, display);
-		}
-	} else {
 		if(select.parentNode === box){
 			box.parentNode.insertBefore(select, box);
+		}
+	} else {
+		if(select.parentNode !== box){
+			box.insertBefore(select, display);
 		}
 	}
 }
