@@ -29,8 +29,8 @@ fork 自 https://github.com/GJRobert/Rime-See-Me-squirrel
 
 ### 3. 预编辑与候选嵌入
 - **行内预编辑（`inline_preedit`）**：
-  - 开启：组字区 `#select` 移入 `#box` 内，与候选项同一容器
-  - 关闭：组字区置于 `#box` 上方
+  - 开启：组字区置于 `#box` 上方，默认开启
+  - 关闭：组字区 `#select` 移入 `#box` 内，与候选项同一容器
 - **候选嵌入（`inline_candidate`）**：
   - 开启：组字区的 `#hilited` 显示候选词汉字
   - 关闭：显示原始拼音
